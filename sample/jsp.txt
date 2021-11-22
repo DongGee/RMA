@@ -1,0 +1,12 @@
+jsp작업
+<div style="margin-bottom: 10px">
+<%
+if (session.getAttribute("member") == null) {
+out.println("<a href='/'로그인</a>");
+}else{
+MemberVo vo = (MemberVO)session.getAttribute("member");
+out.println(vo.getMemberId() + "님 반갑습니다.<br>");
+}
+%>
+<button type="button" onclick="location.href='memberModify'">회원정보 수정</button>
+<button type="button" onclick="location.href='logout'">로그아웃</button>

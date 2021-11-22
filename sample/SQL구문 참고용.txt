@@ -1,0 +1,13 @@
+증가하는 숫자 컬럼을 추가하여 테이블에 보이기(ex.시간순서)
+
+select data.hour, nvl(ani.count,0) count
+from ( --본테이블 시간대별 카운트
+    select to_char(datetime,'hh24') hour, count(*) count
+    from animal_outs
+    group by to_char(datetime,'hh24')
+) ani, ( -- 시간대별 임시테이블 00~23
+    select level-1 hour
+    from dual
+    connect by level<=24) data
+where data.hour = ani.hour(+) -- 기준 컬럼이 (+)대상 테이블 컬럼에 존재할 경우 값을 가져오고 없을시 null로 표시, outer join
+order by data.hour
